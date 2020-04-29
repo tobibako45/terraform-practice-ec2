@@ -94,12 +94,18 @@ resource "aws_instance" "my-test" {
       user = "ec2-user"
       # key_file = var.ssh_key_file
       private_key = file(var.ssh_key_file)
+      script_path = "./script.sh"
     }
-    inline = [
-      "sudo yum -y install nginx",
-      "sudo service nginx start",
-      "sudo chkconfig nginx on" # 自動起動
-    ]
+    # inline = [
+    #   "sudo yum -y install nginx",
+    #   "sudo service nginx start",
+    #   "sudo chkconfig nginx on" # 自動起動
+    # ]
+    # inline = [
+    #   "chmod +x ../tmp/script.sh",
+    #   "../tmp/script.sh args",
+    # ]
+    script = "${path.module}/script.sh"
   }
 }
 
